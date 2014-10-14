@@ -1,0 +1,83 @@
+# depslib dependency file v1.0
+1413280330 source:c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\main.cpp
+	<iostream>
+	<windows.h>
+	<string>
+	<sstream>
+	<tchar.h>
+	<process.h>
+	"pugixml.hpp"
+	"curl/curl.h"
+	"tray.h"
+
+1412857749 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1412857748 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\pugiconfig.hpp
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\curl.h
+	"curlver.h"
+	"curlbuild.h"
+	"curlrules.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"typecheck-gcc.h"
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\curlver.h
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\curlbuild.h
+	<sys/types.h>
+	<sys/socket.h>
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\curlrules.h
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\easy.h
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\multi.h
+	"curl.h"
+
+1412497175 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\curl\typecheck-gcc.h
+
+1412857749 source:c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1413275458 source:c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\winapi.c
+
+1413276097 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\winapi.cpp
+
+1413276493 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\winapi.h
+
+1413280301 c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\tray.h
+
+1413280465 source:c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\tray.rc
+	"tray.h"
+

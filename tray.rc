@@ -1,0 +1,2 @@
+#include "tray.h"
+ID_TRAY1 ICON DISCARDABLE "star.ico"
