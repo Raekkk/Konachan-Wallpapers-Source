@@ -30,6 +30,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-lgdiplus" />
 		</Compiler>
 		<Linker>
 			<Add library="gdi32" />
@@ -38,6 +39,7 @@
 			<Add library="comctl32" />
 			<Add library="curl\libcurl.a" />
 			<Add library="curl\libcurldll.a" />
+			<Add library="libgdiplus.a" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="pugixml.cpp" />

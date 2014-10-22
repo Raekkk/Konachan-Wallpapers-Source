@@ -81,3 +81,82 @@
 1413280465 source:c:\users\radek\documents\visual studio 2013\projects\codeblocks\konachan wallpaper v5\tray.rc
 	"tray.h"
 
+1413998777 source:c:\users\radek\documents\github\konachan-wallpapers-source\main.cpp
+	<iostream>
+	<windows.h>
+	<string>
+	<sstream>
+	<tchar.h>
+	<process.h>
+	<gdiplus.h>
+	<stdio.h>
+	"pugixml.hpp"
+	"curl/curl.h"
+	"tray.h"
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\pugiconfig.hpp
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\curl.h
+	"curlver.h"
+	"curlbuild.h"
+	"curlrules.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"typecheck-gcc.h"
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\curlver.h
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\curlbuild.h
+	<sys/types.h>
+	<sys/socket.h>
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\curlrules.h
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\easy.h
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\multi.h
+	"curl.h"
+
+1413380515 c:\users\radek\documents\github\konachan-wallpapers-source\curl\typecheck-gcc.h
+
+1413824199 c:\users\radek\documents\github\konachan-wallpapers-source\tray.h
+
+1413380515 source:c:\users\radek\documents\github\konachan-wallpapers-source\pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1413484163 source:c:\users\radek\documents\github\konachan-wallpapers-source\tray.rc
+	"tray.h"
+	<windows.h>
+

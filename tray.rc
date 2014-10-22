@@ -1,2 +1,17 @@
 #include "tray.h"
+#include <windows.h>
 ID_TRAY1 ICON DISCARDABLE "star.ico"
+KCH_LOGO RCDATA "logo.png"
+//ICO_TRAY ICON "star.ico"
+//CMSG_TRAY1 10 "star.ico"
+
+
+IDM_ABOUT DIALOG DISCARDABLE 20, 20, 200, 66
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Sans Serif"
+{
+    DEFPUSHBUTTON "&OK", IDOK, 124, 18, 50, 14
+    //PUSHBUTTON "&Anuluj", IDCANCEL, 124, 35, 50, 14
+    LTEXT "Konachan Wallpapers\nversion 0.1\nRADEK", IDM_ABOUTN, 16, 18, 80, 33
+}

@@ -6,6 +6,8 @@
 #include <sstream>
 #include <tchar.h>
 #include <process.h>
+#include <gdiplus.h>
+#include <stdio.h>
 
 #include "pugixml.hpp"
 #include "curl/curl.h"
@@ -13,8 +15,10 @@
 
 using namespace std;
 using namespace pugi;
+using namespace Gdiplus;
 
 static string buffer;
+
 
 VOID WINAPI Sleep(DWORD dwMilliseconds);
 
@@ -83,67 +87,17 @@ void zapis(const char * url){
     }
 }
 
-/*
-int main(){
-char strona[] = "http://konachan.net/post.xml?limit=1&tags=rating%3Asafe";
-
-char * pobrane = pobierzStrone(strona);
-//sprintf(a,"%s>",pobrane);
-strcat(pobrane,">");
-cout << pobrane << endl << endl;
-
-const char *first = "dupsko";
-
-for (;;){
-
-    xml_document doc;
-
-    if (!doc.load(pobrane)) return -1;
-    {
-
-    xml_node tools = doc.child("posts").child("post");
-        for (pugi::xml_attribute attr = tools.first_attribute(); attr; attr = attr.next_attribute())
-        {
-            if (strcmp(attr.name(),"file_url")==0){
-                    cout << attr.value() << endl << endl;
-                    if (!strcmp(attr.value(),first)==0){
-                        zapis(attr.value());
-                        first = attr.value();
-
-                        int ustaw = SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0 , (PVOID)"wall.jpg", SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-                        if (ustaw)
-                        {
-                        cout << "dziala tapeta ustawiona" << endl;
-                        Sleep(30000);
-                        }
-                        else
-                        {
-                        cout << "nie dziala, przykra sprawa" << endl << GetLastError();
-                        }
-                    }
-                    else{ cout <<"DUPA" << endl;}
-            }
-        }
-
-    }
-}
-}*/
-/*=====================================================================================================*/
-
-unsigned int g_Counter = 0;
-
-
-
-
-
 
 
 /*=====================================================================================================*/
 string first;
 string strona = "http://konachan.net/post.xml?limit=1&tags=rating%3Asafe";
+bool RANDOM=false;
+HINSTANCE hInst;
 
 
-void ustawWalla(char *a, string b){
+
+int ustawWalla(char *a, string b){
 xml_document doc;
 
     if (doc.load(a))
@@ -154,133 +108,86 @@ xml_document doc;
             if (strcmp(attr.name(),"jpeg_url")==0){
                     string odwolanie = attr.value();
                     if (odwolanie != b){
-                        cout <<attr.value()<<"\n"<<first <<"\n";
+                        //cout <<attr.value()<<"\n"<<first <<"\n";
                         first = attr.value();
                         zapis(attr.value());
-
+cout <<first;
                         int ustaw = SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0 , (PVOID)"wall.jpg", SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                         if (ustaw)
                         {
                         cout << "dziala tapeta ustawiona\n";
-                        Sleep(1000);
+                        Sleep(5000);
                         }
                         else
                         {
                         cout << "nie dziala, przykra sprawa\n";
-                        Sleep(1000);
+                        Sleep(5000);
                         }
                     }
                     else
                         {
-                            cout <<"DUPA\n";
-                            Sleep(1000);
+                            cout <<"WYKRYTO DUPLIKAT\n";
+                            Sleep(5000);
                     }
             }
         }
 
     }
+    return 1;
 }
 
 
-void  __cdecl drugiWatek(void * Args){
+void __cdecl drugiWatek(void * Args){
     char *temp = new char[strona.size() +1];
     strcpy(temp,strona.c_str());
 
     char * pobrane = pobierzStrone(temp);
     strcat(pobrane,">");
+    int plecy;
 
-        for (;;){
-        char *temp = new char[strona.size() +1];
-        strcpy(temp,strona.c_str());
+        while(true){
 
-        ustawWalla(pobrane,first);
-
-        pobrane = pobierzStrone(temp);
-        strcat(pobrane,">");
-        cout << temp <<endl<<strona;
+                    char *temp = new char[strona.size() +1];
+                    strcpy(temp,strona.c_str());
+                    plecy = ustawWalla(pobrane,first);
+                    pobrane = pobierzStrone(temp);
+                    strcat(pobrane,">");
+                    cout << "drugi watek zakonczyl dzialanie\n";
+                    Sleep(10);
         }
-
-/*
-for (;;){
-
-
- xml_document doc;
-
-    if (doc.load(pobrane)) //return -1;MO¯E ZMIANA NA WHILE>>>???CHHUJ WIE
-    {
-    //cout << first << "\n";
-    xml_node tools = doc.child("posts").child("post");
-        for (pugi::xml_attribute attr = tools.first_attribute(); attr; attr = attr.next_attribute())
-        {
-            if (strcmp(attr.name(),"file_url")==0){
-
-
-                    if (!strcmp(attr.value(),first)==0){
-                            cout << first << "\n";
-                        //zmianaF(attr.value());
-                            cout << first << "\n";
-                        //zapis(attr.value());
-
-
-
-                        int ustaw = SystemParametersInfoA(SPI_SETDESKWALLPAPER, 0 , (PVOID)"wall.jpg", SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-                        if (ustaw)
-                        {
-                        cg_Counterout <<"dziala tapeta ustawiona\n" << first;
-                        Sleep(5000);
-                        //ustawWalla();
-                        //return 1;
-                        //Sleep(30000);
-                        }
-                        else
-                        {
-                        cout << "nie dziala, przykra sprawa\n";
-                        Sleep(5000);
-                        //ustawWalla();
-                        //return 0;
-                        }
-                    }
-                    else
-                        {
-                            cout <<"DUPA\n";
-                            Sleep(5000);
-                            //ustawWalla();
-                            //return -1;
-                    }
-            }
-        }
-
-    }
-}
-   // return 1;*/
 }
 
-
-
-
-
-
-
-
-
+void getImage();
 
 /*========================================================================================================*/
 
 
-
-LPSTR NazwaKlasy = "Klasa Okienka";
+LPSTR NazwaKlasy = "Klasa";
 MSG Komunikat;
-HWND g_hPrzycisk;
+HBITMAP g_Logo;
+HWND g_hCheckboxRandom;
+HWND g_hCheckboxLast;
 HWND g_hCheckbox;
-
+HWND g_hTextT;
+HWND g_hOk;
 
 
 LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
+LRESULT CALLBACK About(HWND, UINT, WPARAM, LPARAM);
+
+
 
 
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
+    //START GDI
+    GdiplusStartupInput gdiplusStartupInput;
+    ULONG_PTR gdiplusToken;
+    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+
+
 
     // WYPE£NIANIE STRUKTURY
     WNDCLASSEX wc;
@@ -291,12 +198,12 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
     wc.hInstance = hInstance;
-    wc.hIcon = LoadIcon( NULL, IDI_APPLICATION );
+    wc.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE(101) );
     wc.hCursor = LoadCursor( NULL, IDC_ARROW );
     wc.hbrBackground =( HBRUSH )( COLOR_WINDOW + 1 );
     wc.lpszMenuName = NULL;
     wc.lpszClassName = NazwaKlasy;
-    wc.hIconSm = LoadIcon( NULL, IDI_APPLICATION );
+    wc.hIconSm = LoadIcon( hInstance, MAKEINTRESOURCE(101) );
 
 
 
@@ -312,8 +219,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     // TWORZENIE OKNA
     HWND hwnd;
 
-    hwnd = CreateWindowEx( WS_EX_CLIENTEDGE, NazwaKlasy, "Oto okienko", WS_OVERLAPPEDWINDOW,
-    CW_USEDEFAULT, CW_USEDEFAULT, 190, 240, NULL, NULL, hInstance, NULL );
+    hInst = hInstance;
+
+    hwnd = CreateWindowEx( WS_EX_CLIENTEDGE, NazwaKlasy, "Konachan Wallpapers", WS_OVERLAPPEDWINDOW^(WS_MINIMIZEBOX | WS_SIZEBOX),
+    CW_USEDEFAULT, CW_USEDEFAULT, 504, 172, NULL, NULL, hInstance, NULL );
 
     if( hwnd == NULL )
     {
@@ -321,34 +230,48 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
         return 1;
     }
 
+
+
     //GUZIKI ITP
 
-    g_hPrzycisk = CreateWindowEx( 0, "BUTTON", "GUZIK", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,10, 64, 150, 30, hwnd, (HMENU)1, hInstance, NULL );
-    g_hCheckbox = CreateWindowEx( 0, "BUTTON", "SAFE?", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,10, 10, 150, 30, hwnd, (HMENU)2, hInstance, NULL );
+    //g_hGroup = CreateWindowEx( 0, "BUTTON", "Random", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_GROUPBOX,100, 100, 120, 92, hwnd, (HMENU)1, hInstance, NULL );
+    //g_hTextT = CreateWindowEx( WS_EX_CLIENTEDGE, "EDIT", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER /*| WS_VSCROLL*/ | ES_MULTILINE/* | ES_AUTOVSCROLL*/, 5, 5, 150, 150, hwnd, NULL, hInstance, NULL );
+    //g_hCheckboxRandom = CreateWindowEx( 0, "BUTTON", "Random", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,246, 100, 100, 30, hwnd, (HMENU)3, hInstance, NULL );
+    g_hOk = CreateWindowEx( 0, "BUTTON", "OK", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,380, 100, 100, 30, hwnd, (HMENU)4, hInstance, NULL );
+
+   // SetWindowText(g_hTextT,"TAGI\r\nosobno w liniach");
+
+
+    g_hCheckbox = CreateWindowEx( 0, "BUTTON", "Only Safe", WS_CHILD | WS_VISIBLE | BS_FLAT | BS_CHECKBOX,10, 100, 150, 30, hwnd, (HMENU)2, hInstance, NULL );
+  //  g_hCheckboxLast = CreateWindowEx( 0, "BUTTON", "Last", WS_CHILD | WS_VISIBLE | BS_FLAT | BS_CHECKBOX,123, 100, 150, 30, hwnd, (HMENU)2, hInstance, NULL );
     CheckDlgButton(hwnd,2, BST_CHECKED);
 
 
-    // TRAY
-    LPSTR sTip = "Konahcan Wallpapers";
+
+    DWORD dlugosc = GetWindowTextLength( g_hTextT );
+    LPSTR Bufor =( LPSTR ) GlobalAlloc( GPTR, dlugosc + 1 );
+    GetWindowText( g_hTextT, Bufor, dlugosc + 1 );
+
+    //TRAYY
+    LPSTR sTip = "Konachan Wallpapers";
     NOTIFYICONDATA nid;
 
     nid.cbSize = sizeof( NOTIFYICONDATA );
     nid.hWnd = hwnd;
     nid.uID = ID_TRAY1;
     nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-    nid.uCallbackMessage = ID_TRAY1;
-    nid.hIcon = LoadIcon( NULL, IDI_APPLICATION );
+    nid.uCallbackMessage = CMSG_TRAY1;
+    nid.hIcon = LoadIcon(hInstance,MAKEINTRESOURCE(101));
     lstrcpy( nid.szTip, sTip );
+    Shell_NotifyIcon(NIM_ADD, & nid);
+
 
     ShowWindow( hwnd, nCmdShow ); // Poka¿ okienko...
     UpdateWindow( hwnd );
 
 
-    BOOL r;
-    r = Shell_NotifyIcon( NIM_ADD, & nid );
-    if( !r ) MessageBox( hwnd, "No niestety, z ikonki nici...", "Łeeee...", MB_ICONEXCLAMATION );
 
-
+HANDLE hUstaw = ( HANDLE ) _beginthread(drugiWatek,0, NULL);
 
     // Pêtla komunikatów
     while( GetMessage( & Komunikat, NULL, 0, 0 ) )
@@ -361,18 +284,83 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     return Komunikat.wParam;
 }
 
+void rysujo(HDC hdc){
+   Graphics graphics(hdc);
+   Image    image(L"dol.db");
+    //Image   image(L"MAKEINTRESOURCE(0x8005)");
+   //image = Gdiplus::Bitmap::FromResource(1, MAKEINTRESOURCE(0x8005));
+   graphics.DrawImage(&image,10,10,484,80);
+}
 // OBS£UGA ZDARZEÑ
-LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
+LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    HDC hdc;
+    PAINTSTRUCT ps;
+
+    TCHAR szH[100];
+    LoadString(hInst, msg, szH, 100);
     switch( msg )
     {
 
+    case WM_PAINT:
+        {
+        HBRUSH hbrBkgnd;
+        RECT r;
+
+        GetClientRect( hwnd, & r );
+        hdc = BeginPaint( hwnd, & ps );
+        hbrBkgnd = CreateSolidBrush( RGB( 255, 255, 255 ) );
+        FillRect( hdc, & r, hbrBkgnd );
+        rysujo(hdc);
+        EndPaint( hwnd, & ps );
+        }
+
+    case CMSG_TRAY1:
+    {
+    if( wParam == ID_TRAY1 )
+    if( lParam == WM_LBUTTONDOWN )
+    ShowWindow( hwnd, SW_RESTORE );
+
+    if (lParam == WM_RBUTTONDOWN)
+		{
+			HMENU popupMenu = CreatePopupMenu();
+            AppendMenu(popupMenu, MF_STRING, IDM_ABOUT, "About");
+            AppendMenuW(popupMenu, MF_SEPARATOR, 0, NULL);
+            AppendMenu(popupMenu, MF_STRING, IDM_QUIT, "Exit");
+
+			POINT ptCursor;
+			GetCursorPos(&ptCursor);
+			TrackPopupMenuEx(popupMenu, TPM_RIGHTBUTTON, ptCursor.x, ptCursor.y, hwnd,0);
+            DestroyMenu(popupMenu);
+		}
+    }
+    break;
+
+    case WM_CTLCOLORSTATIC:
+    {
+        SetBkMode((HDC)wParam, TRANSPARENT);
+        return (LRESULT)::GetStockObject(NULL_BRUSH);
+    }
+    case WM_INITDIALOG:
+        {
+        SetClassLong( hwnd, GCL_HICON,( LONG ) LoadIcon( GetModuleHandle( NULL ), MAKEINTRESOURCE( 3 ) ) );
+        return TRUE;
+        }
+
+    case WM_ERASEBKGND:
+        {
+        //int a=SmarujTlo(hwnd);
+        //hdc = BeginPaint(hwnd, &ps);
+        //rysujo(hdc);
+        //EndPaint(hwnd, &ps);
+        //return SmarujTlo( hwnd );
+        }
 
     case WM_CREATE:
-        {HANDLE hUstaw = ( HANDLE ) _beginthread(drugiWatek,0, NULL);
-          int ID2 = GetDlgCtrlID(g_hCheckbox);
-        //for (;;){HANDLE hUstaw = ( HANDLE ) _beginthread(ustawWalla,0, NULL); Sleep(400);}
-        CheckDlgButton(hwnd,ID2, BST_CHECKED);
+        {
+        //HANDLE hUstaw = ( HANDLE ) _beginthread(drugiWatek,0, NULL);
+        //int ID2 = GetDlgCtrlID(g_hCheckbox);
+        //CheckDlgButton(hwnd,ID2, BST_CHECKED);
         }
         break;
 
@@ -388,23 +376,50 @@ LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
                 }
                 else
                 {
-                    CheckDlgButton(hwnd,2, BST_UNCHECKED);cout <<"aa";
+                    CheckDlgButton(hwnd,2, BST_UNCHECKED);
+                    cout <<"aa";
                     //SendMessage(g_hCheckbox, BM_SETCHECK, BST_CHECKED,0);
-                    strona = "http://konachan.net/post.xml?limit=1&tags=-rating%3Asafe";
+                    strona = "http://konachan.net/post.xml?limit=1";
                     cout <<strona;
                 }
             }
-        //if(( HWND ) lParam == g_hPrzycisk )
-        //ustawWalla();
-        //HANDLE hUstaw = ( HANDLE ) _beginthread(ustawWalla,0, NULL);
+
+            if ((HWND) lParam == g_hOk)
+            {
+                ShowWindow(hwnd,SW_HIDE);
+            }
+        if(( HWND ) lParam == g_hCheckboxRandom )
+        {
+        HDC          hdc;
+        PAINTSTRUCT  ps;
+        hdc = BeginPaint(hwnd, &ps);
+        rysujo(hdc);
+        }
+        if (LOWORD(wParam)==IDM_QUIT)
+            {
+            DestroyWindow(hwnd);
+            }
+
+        if (LOWORD(wParam)==IDM_ABOUT)
+        {
+            DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(0x8002), hwnd, (DLGPROC)About);
+        }
         }
         break;
 
     case WM_CLOSE:
-        DestroyWindow( hwnd );
+        ShowWindow(hwnd,SW_HIDE);
         break;
 
     case WM_DESTROY:
+        NOTIFYICONDATA nid;
+        nid.cbSize = sizeof( NOTIFYICONDATA );
+        nid.hWnd = hwnd;
+        nid.uID = ID_TRAY1;
+        nid.uFlags = 0;
+
+        Shell_NotifyIcon( NIM_DELETE, & nid );
+
         PostQuitMessage( 0 );
         break;
 
@@ -413,4 +428,22 @@ LRESULT CALLBACK WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
     }
 
     return 0;
+}
+
+LRESULT CALLBACK About(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+		case WM_INITDIALOG:
+				return TRUE;
+
+		case WM_COMMAND:
+			if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			}
+			break;
+	}
+    return FALSE;
 }
